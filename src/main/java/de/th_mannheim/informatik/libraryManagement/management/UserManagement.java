@@ -1,76 +1,44 @@
 package de.th_mannheim.informatik.libraryManagement.management;
 
-
-import de.th_mannheim.informatik.libraryManagement.domain.user.Admin;
-import de.th_mannheim.informatik.libraryManagement.domain.user.AdultUser;
-import de.th_mannheim.informatik.libraryManagement.domain.user.StudentUser;
-import de.th_mannheim.informatik.libraryManagement.domain.user.User;
-
-import java.util.HashMap;
+import de.th_mannheim.informatik.libraryManagement.domain.data.AuthService;
+import de.th_mannheim.informatik.libraryManagement.domain.data.CreateService;
 
 /**
  * This class is responsible for managing users.
  */
 public class UserManagement {
-   public HashMap<String, User> users = new HashMap<>();
-
-    /**
-     * Constructor for UserManagement objects.
-     */
-    public UserManagement() {
-        initializeAdmin();
-    }
-
+    private static String role;
     /**
      * This method creates a new user.
-     * @param type
-     * @param name
-     * @return newUser
     */
-    public String createUser(String type, String name) {
-        User newUser;
-
-        switch (type.toLowerCase()) {
-            case "student" -> newUser = new StudentUser(name);
-            case "adult" -> newUser = new AdultUser(name);
-            case "admin" -> newUser = new Admin(name);
-            default -> throw new InvalidUserTypeException("Ungültiger Benutzertyp: " + type);
-        
-        }
-        users.put(newUser.getId(), newUser);
-        return newUser.getId();
+    public boolean createUser(String username, String password, String email) {
+        return CreateService.createUser(username, password, email, "USER");
     }
 
     /**
-     * This method displays a user.
-     * @param id
+     * This method authenticates a user.
+     * @param username The username of the user.
+     * @param password The password of the user.
+     * @return true if authentication is successful, false otherwise.
      */
-    public void displayUser(String id) {
-        try {
-            if (users.containsKey(id)) {
-                User user = users.get(id);
-                user.displayUserType();
-            }
-        } catch (Exception e) {
-            throw new UserNotFoundException("Benutzer mit ID: " + id + " existiert nicht.");
-        }        
+    public boolean authenticateUser(String username, String password) {
+        String authenticatedRole = AuthService.authenticate(username, password);
+        if (authenticatedRole != null) {
+            role = authenticatedRole;
+            return true;
+        }
+        return false;
     }
 
-    private void initializeAdmin() {
-        Admin admin = new Admin("Admin User");
-        users.put(admin.getId(), admin);
-        System.out.println("Admin-Benutzer wurde hinzugefügt: " + admin.getId());
+    /**
+     * This method returns the role of the authenticated user.
+     * @return The role of the user.
+     */
+    public String getRole() {
+        return role;
     }
-}
 
-/**
- * This class is responsible for exceptions when the user type is invalid.
- *
- * @return InvalidUserTypeException
- * @throws RuntimeException
- */
-class InvalidUserTypeException extends RuntimeException {
-    public InvalidUserTypeException(String message) {
-        super(message);
+    public boolean deleteUser(String username) {
+        //TODO
     }
 }

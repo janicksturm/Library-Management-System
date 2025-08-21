@@ -11,14 +11,14 @@ public class AuthService {
 
     public static String authenticate(String username, String password) {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
-            String query = "SELECT password, role FROM users WHERE username = ?";
+            String query = "SELECT PASSWORD, ROLE FROM USER WHERE USERNAME = ?";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, username);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                String pw = rs.getString("password");
-                String role = rs.getString("role");
+                String pw = rs.getString("PASSWORD");
+                String role = rs.getString("ROLE");
 
                 if (password.equals(pw)) {
                     return role;

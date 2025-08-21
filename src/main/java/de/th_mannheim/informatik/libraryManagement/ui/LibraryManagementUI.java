@@ -1,8 +1,7 @@
 package de.th_mannheim.informatik.libraryManagement.ui;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.WindowEvent;
-import java.util.logging.Logger;
+import de.th_mannheim.informatik.libraryManagement.management.UserManagement;
+
 import java.awt.*;
 import javax.swing.*;
 
@@ -14,11 +13,10 @@ public class LibraryManagementUI extends JFrame {
     private final BookPanel booksPanel = new BookPanel();
     private final MemberPanel membersPanel = new MemberPanel();
     private final LoanPanel loansPanel = new LoanPanel();
-    private final String role;
+    private static final UserManagement userManagement = new UserManagement();
 
-    public LibraryManagementUI(String role) {
+    public LibraryManagementUI() {
         super("Library Management System");
-        this.role = role;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setMinimumSize(new Dimension(1100, 700));
 
@@ -28,7 +26,7 @@ public class LibraryManagementUI extends JFrame {
 
     private JTabbedPane createMainTabs() {
         JTabbedPane tabs = new JTabbedPane();
-        if (role.equals("admin")) {
+        if (userManagement.getRole().equals("admin")) {
             tabs.addTab("Books", booksPanel);
             tabs.addTab("Members", membersPanel);
             tabs.addTab("Loans", loansPanel);

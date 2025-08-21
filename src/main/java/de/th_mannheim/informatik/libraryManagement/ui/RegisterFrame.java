@@ -8,17 +8,22 @@ import java.awt.*;
 import java.util.logging.Logger;
 
 /**
- * LoginFrame class for handling user login in the Library Management System.
- * This frame includes fields for username and password, and buttons for login and exit.
+ * RegisterFrame class for handling user registration in the Library Management System.
+ * This frame includes fields for username and password, and buttons for registration, login, and exit.
  */
-public class LoginFrame extends JFrame {
-    private static final Logger LOGGER = Logger.getLogger(LoginFrame.class.getName());
+public class RegisterFrame extends JFrame {
+    private static final Logger LOGGER = Logger.getLogger(RegisterFrame.class.getName());
     private JTextField usernameField;
     private JPasswordField passwordField;
+    private JTextField emailField;
     private static final UserManagement userManagement = new UserManagement();
 
-    public LoginFrame() {
-        super("Library Login");
+    /**
+     * Constructor for RegisterFrame.
+     * Initializes the frame with components for user registration.
+     */
+    public RegisterFrame() {
+        super("Library Registration");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(400, 250);
         setLocationRelativeTo(null);
@@ -44,7 +49,13 @@ public class LoginFrame extends JFrame {
         passwordField = new JPasswordField(15);
         panel.add(passwordField, gbc);
 
-        gbc.gridx = 0; gbc.gridy = 2; gbc.gridwidth = 2;
+        gbc.gridx = 0; gbc.gridy = 2;
+        panel.add(new JLabel("Email:"), gbc);
+        gbc.gridx = 1;
+        emailField = new JTextField(15);
+        panel.add(emailField, gbc);
+
+        gbc.gridx = 0; gbc.gridy = 3; gbc.gridwidth = 2;
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         JButton regBtn = new JButton("Register");
@@ -58,52 +69,31 @@ public class LoginFrame extends JFrame {
         panel.add(buttons, gbc);
 
         regBtn.addActionListener(e -> registerUI());
-        loginBtn.addActionListener(e -> login());
+        loginBtn.addActionListener(e -> openLoginUI());
         exitBtn.addActionListener(e -> System.exit(0));
     }
 
     private void registerUI() {
-        RegisterFrame registerFrame = new RegisterFrame();
-        registerFrame.setVisible(true);
-        this.dispose();
-    }
-
-    private void login() {
-        String username = usernameField.getText().trim();
+        String username = usernameField.getText();
         String password = new String(passwordField.getPassword());
-
-        if (userManagement.authenticateUser(username, password)) {
-            LOGGER.info("User " + username + " logged in with role: " + userManagement.getRole());
-            openMainUI();
-        } else {
-            JOptionPane.showMessageDialog(this, "Invalid login", "Login Error", JOptionPane.ERROR_MESSAGE);
-            LOGGER.warning("Failed login attempt for user: " + username);
+        String email = emailField.getText();
+        if (username.isEmpty() || password.isEmpty() || email.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "All fields are required.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
-        usernameField.setText("");
-        passwordField.setText("");
+        if (userManagement.createUser(username, password, email)) {
+            JOptionPane.showMessageDialog(this, "Registration successful! Please Login", "Success", JOptionPane.INFORMATION_MESSAGE);
+            LOGGER.info("User " + username + " registered successfully.");
+            openLoginUI();
+        } else {
+            JOptionPane.showMessageDialog(this, "Registration failed. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+            LOGGER.warning("Failed to register user: " + username);
+        }
     }
 
-    private void openMainUI() {
-        LibraryManagementUI ui = new LibraryManagementUI();
+    private void openLoginUI() {
+        LoginFrame ui = new LoginFrame();
         ui.setVisible(true);
         this.dispose();
-    }
-
-    public static void main(String[] args) {
-        try {
-            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (Exception e) {
-            LOGGER.warning("Failed to set Look and Feel: " + e.getMessage());
-        }
-
-        SwingUtilities.invokeLater(() -> {
-            LoginFrame login = new LoginFrame();
-            login.setVisible(true);
-        });
     }
 }

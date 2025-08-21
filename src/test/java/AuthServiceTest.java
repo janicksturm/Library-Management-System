@@ -1,9 +1,6 @@
 import de.th_mannheim.informatik.libraryManagement.domain.data.AuthService;
 import org.junit.jupiter.api.Test;
 
-import java.sql.SQLException;
-
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AuthServiceTest {
