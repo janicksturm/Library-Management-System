@@ -1,5 +1,7 @@
 package de.th_mannheim.informatik.libraryManagement.ui;
 
+import de.th_mannheim.informatik.libraryManagement.domain.data.AuthService;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -60,14 +62,16 @@ public class LoginFrame extends JFrame {
         String username = usernameField.getText().trim();
         String password = new String(passwordField.getPassword());
 
-        //Hardcoded credentials for demonstration purposes
-        if (username.equals("admin") && password.equals("admin123")) {
-            openMainUI("admin");
-        } else if (username.equals("user") && password.equals("user123")) {
-            openMainUI("User");
+        if (AuthService.authenticate(username, password) != null) {
+            String role = AuthService.authenticate(username, password);
+            LOGGER.info("User " + username + " logged in with role: " + role);
+            openMainUI(role);
         } else {
-            JOptionPane.showMessageDialog(this, "Invalid credentials", "Login Failed", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Invalid login", "Login Error", JOptionPane.ERROR_MESSAGE);
+            LOGGER.warning("Failed login attempt for user: " + username);
         }
+        usernameField.setText("");
+        passwordField.setText("");
     }
 
     private void openMainUI(String role) {
