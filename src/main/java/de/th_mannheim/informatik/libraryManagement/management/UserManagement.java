@@ -1,7 +1,7 @@
 package de.th_mannheim.informatik.libraryManagement.management;
 
 import de.th_mannheim.informatik.libraryManagement.domain.data.AuthService;
-import de.th_mannheim.informatik.libraryManagement.domain.data.CreateService;
+import de.th_mannheim.informatik.libraryManagement.domain.data.CreateUserService;
 
 /**
  * This class is responsible for managing users.
@@ -12,7 +12,7 @@ public class UserManagement {
      * This method creates a new user.
     */
     public boolean createUser(String username, String password, String email) {
-        return CreateService.createUser(username, password, email, "USER");
+        return CreateUserService.createUser(username, password, email, "USER");
     }
 
     /**
@@ -40,5 +40,6 @@ public class UserManagement {
 
     public boolean deleteUser(String username) {
         //TODO
+        return true;
     }
 }

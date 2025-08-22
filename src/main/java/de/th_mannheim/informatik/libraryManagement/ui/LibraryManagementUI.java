@@ -26,7 +26,7 @@ public class LibraryManagementUI extends JFrame {
 
     private JTabbedPane createMainTabs() {
         JTabbedPane tabs = new JTabbedPane();
-        if (userManagement.getRole().equals("admin")) {
+        if (userManagement.getRole().equals("ADMIN")) {
             tabs.addTab("Books", booksPanel);
             tabs.addTab("Members", membersPanel);
             tabs.addTab("Loans", loansPanel);
