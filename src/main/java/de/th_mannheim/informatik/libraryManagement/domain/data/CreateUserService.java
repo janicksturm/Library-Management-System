@@ -9,8 +9,8 @@ import java.util.logging.Logger;
  * CreateService class for handling user creation in the Library Management System.
  * This service interacts with the database to create new users.
  */
-public class CreateService {
-    private static final Logger LOGGER = Logger.getLogger(CreateService.class.getName());
+public class CreateUserService {
+    private static final Logger LOGGER = Logger.getLogger(CreateUserService.class.getName());
 
     /**
      * This method creates a new user in the database.
@@ -52,8 +52,11 @@ public class CreateService {
         try {
             emf = Persistence.createEntityManagerFactory("library_db");
             EntityManager em = emf.createEntityManager();
-            User user = em.find(User.class, username);
-            return user != null;
+            User existUser = em.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class)
+                    .setParameter("username", username)
+                    .getSingleResult();
+            System.out.println("User exists: " + existUser);
+            return existUser != null;
         } catch (Exception e) {
             LOGGER.severe("Error checking if user exists: " + e.getMessage());
             return false;
