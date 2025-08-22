@@ -53,4 +53,32 @@ public class CreateMediaService {
             }
         }
     }
+
+    public void removeMedia(long isbn) {
+        EntityManagerFactory emf = null;
+        try {
+            emf = Persistence.createEntityManagerFactory("library_db");
+            EntityManager em = emf.createEntityManager();
+            em.getTransaction().begin();
+
+            Book book = em.createQuery("SELECT b FROM Book b WHERE b.isbn = :isbn", Book.class)
+                    .setParameter("isbn", isbn)
+                    .getSingleResult();
+
+            if (book != null) {
+                em.remove(book);
+                LOGGER.info("Media removed: " + book.getTitle());
+            } else {
+                LOGGER.warning("Media not found for removal: ISBN " + isbn);
+            }
+
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            LOGGER.severe("Error removing media: " + e.getMessage());
+        } finally {
+            if (emf != null) {
+                emf.close();
+            }
+        }
+    }
 }

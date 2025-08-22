@@ -1,4 +1,5 @@
 import de.th_mannheim.informatik.libraryManagement.domain.media.CreateMediaService;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -21,5 +22,11 @@ public class CreateMediaServiceTest {
 
         boolean result = service.createMedia(9780134685991L, "Effective Java", "Joshua Bloch", 2018, true);
         assertFalse(result);
+    }
+
+    @AfterAll
+    public static void removeTestData() {
+        CreateMediaService service = new CreateMediaService();
+        service.removeMedia(9780134685991L);
     }
 }

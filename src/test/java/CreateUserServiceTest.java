@@ -1,5 +1,6 @@
 
 import de.th_mannheim.informatik.libraryManagement.domain.data.CreateUserService;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -17,5 +18,10 @@ public class CreateUserServiceTest {
     public void testCreateUserWithExistingTitle() {
         boolean result = CreateUserService.createUser("user", "user123", "user@ss.com", "USER");
         assertFalse(result);
+    }
+
+    @AfterAll
+    public static void removeTestData() {
+        CreateUserService.removeUser("john_doe");
     }
 }

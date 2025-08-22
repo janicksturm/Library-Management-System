@@ -66,4 +66,30 @@ public class CreateUserService {
             }
         }
     }
+
+    public static void removeUser(String username) {
+        EntityManagerFactory emf = null;
+        try {
+            emf = Persistence.createEntityManagerFactory("library_db");
+            EntityManager em = emf.createEntityManager();
+            em.getTransaction().begin();
+
+            User user = em.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class)
+                    .setParameter("username", username)
+                    .getSingleResult();
+            if (user != null) {
+                em.remove(user);
+                em.getTransaction().commit();
+                LOGGER.info("User removed: " + username);
+            } else {
+                LOGGER.warning("User not found: " + username);
+            }
+        } catch (Exception e) {
+            LOGGER.severe("Error removing user: " + e.getMessage());
+        } finally {
+            if (emf != null) {
+                emf.close();
+            }
+        }
+    }
 }
