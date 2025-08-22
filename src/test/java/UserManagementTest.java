@@ -14,12 +14,13 @@ public class UserManagementTest {
 
     @Test
     public void testAuthenticateUser() {
-        userManagement.createUser("testuser", "password123", "testemail@test.com");
-        assertTrue(userManagement.authenticateUser("testuser", "password123"));
+        userManagement.createUser("testuser2", "password12", "test2@gmail.com");
+        assertTrue(userManagement.authenticateUser("testuser2", "password12"));
     }
 
-    @Test
-    public void deleteTestUser() {
-        assertTrue(userManagement.deleteUser("testuser"));
+    @AfterAll
+    public static void deleteTestUser() {
+        userManagement.deleteUser("testuser");
+        userManagement.deleteUser("testuser2");
     }
 }

@@ -67,7 +67,7 @@ public class CreateUserService {
         }
     }
 
-    public static void removeUser(String username) {
+    public static boolean removeUser(String username) {
         EntityManagerFactory emf = null;
         try {
             emf = Persistence.createEntityManagerFactory("library_db");
@@ -81,9 +81,9 @@ public class CreateUserService {
                 em.remove(user);
                 em.getTransaction().commit();
                 LOGGER.info("User removed: " + username);
-            } else {
-                LOGGER.warning("User not found: " + username);
+                return true;
             }
+            LOGGER.warning("User not found: " + username);
         } catch (Exception e) {
             LOGGER.severe("Error removing user: " + e.getMessage());
         } finally {
@@ -91,5 +91,6 @@ public class CreateUserService {
                 emf.close();
             }
         }
+        return false;
     }
 }

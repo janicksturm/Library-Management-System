@@ -2,12 +2,19 @@ package de.th_mannheim.informatik.libraryManagement.management;
 
 import de.th_mannheim.informatik.libraryManagement.domain.data.AuthService;
 import de.th_mannheim.informatik.libraryManagement.domain.data.CreateUserService;
+import de.th_mannheim.informatik.libraryManagement.domain.data.User;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+
+import java.util.logging.Logger;
 
 /**
  * This class is responsible for managing users.
  */
 public class UserManagement {
     private static String role;
+    private static final Logger LOGGER = Logger.getLogger(UserManagement.class.getName());
     /**
      * This method creates a new user.
     */
@@ -39,7 +46,6 @@ public class UserManagement {
     }
 
     public boolean deleteUser(String username) {
-        //TODO
-        return true;
+        return CreateUserService.removeUser(username);
     }
 }
