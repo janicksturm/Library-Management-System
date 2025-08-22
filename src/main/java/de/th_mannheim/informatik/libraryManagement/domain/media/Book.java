@@ -14,16 +14,16 @@ public class Book {
     private String title;
     private String author;
     private int year;
-    private boolean status;
+    private boolean available;
 
     public Book() { }
 
-    public Book(long isbn, String title, String author, int year, boolean status) {
+    public Book(long isbn, String title, String author, int year, boolean available) {
         this.isbn = isbn;
         this.title = title;
         this.author = author;
         this.year = year;
-        this.status = status;
+        this.available = available;
     }
 
     public int getId() {
@@ -66,11 +66,11 @@ public class Book {
         this.year = year;
     }
 
-    public boolean isStatus() {
-        return status;
+    public boolean isAvailable() {
+        return available;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
 }

@@ -1,5 +1,7 @@
 package de.th_mannheim.informatik.libraryManagement.ui;
 
+import de.th_mannheim.informatik.libraryManagement.management.BookManagement;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
@@ -13,6 +15,7 @@ public class BookPanel extends JPanel {
     private final JTable table;
     private final DefaultTableModel model;
     private final JTextField searchField = new JTextField();
+    private static final BookManagement bookManagement = new BookManagement();
 
     public BookPanel() {
         super(new BorderLayout(8, 8));
@@ -24,6 +27,8 @@ public class BookPanel extends JPanel {
             }
         };
         table = new JTable(model);
+
+        bookManagement.displayBooks(model);
 
         JPanel top = new JPanel(new BorderLayout(8, 8));
         JPanel search = new JPanel(new BorderLayout(6, 6));
