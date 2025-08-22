@@ -1,52 +1,76 @@
 package de.th_mannheim.informatik.libraryManagement.domain.media;
 
-/**
- * This class represents a Book object.
- * It extends the Media class with all basic information about a book.
- */
-public class Book extends Media implements Extendable {
-    private static final int EXTENSION_PERIOD = 28; // 4 Weeks in days
-    private static final int MAX_EXTENSION = 3; // Maximum number of extensions
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
-    /**
-     * Constructor for a book with the specified properties.
-     * 
-     * @param id The ID of the book.
-     * @param title The title of the book.
-     * @param author The author of the book.
-     * @param releaseDate The release date of the book. 
-     */
-    public Book(int id, String title, String author, int releaseDate) {
-        super(id, title, author, releaseDate);
+@Entity
+public class Book {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    private long isbn;
+    private String title;
+    private String author;
+    private int year;
+    private boolean status;
+
+    public Book() { }
+
+    public Book(long isbn, String title, String author, int year, boolean status) {
+        this.isbn = isbn;
+        this.title = title;
+        this.author = author;
+        this.year = year;
+        this.status = status;
     }
 
-    /**
-     * Returns the extension period of the book.
-     * 
-     * @return extension period of the book.
-     */
-    @Override
-    public int getExtensionPeriod() {
-        return EXTENSION_PERIOD;
+    public int getId() {
+        return id;
     }
 
-    /**
-     * Returns the maximum number of renewals of the book.
-     * 
-     * @return maximum number of renewals of the book.
-     */
-    @Override
-    public int getMaxRenewals() {
-        return MAX_EXTENSION;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    /**
-     * Returns all details of the book.
-     * 
-     * @return details of the book.
-     */
-    @Override
-    public String displayMediaDetails() {
-        return ("Das Buch: " + title + " ist aus dem Jahr " + releaseDate  + " und wurde von " + author + "veröffentlich." + ".\nVerfügbar: " + available);
+    public long getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(long isbn) {
+        this.isbn = isbn;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 }

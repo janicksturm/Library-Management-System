@@ -4,6 +4,7 @@
 
         <!-- Entity-Klassen -->
         <class>de.th_mannheim.informatik.libraryManagement.domain.data.User</class>
+        <class>de.th_mannheim.informatik.libraryManagement.domain.media.Book</class>
 
         <properties>
             <!-- JDBC-Verbindung -->
