@@ -42,8 +42,15 @@ public class BookPanel extends JPanel {
 
         clear.addActionListener(e -> searchField.setText(""));
 
+        getPanel();
+
+        add(top, BorderLayout.NORTH);
+        add(new JScrollPane(table), BorderLayout.CENTER);
+    }
+
+    private void getPanel() {
+        JPanel actions = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         if (userManagement.getRole().equals("ADMIN")) {
-            JPanel actions = new JPanel(new FlowLayout(FlowLayout.RIGHT));
             JButton add = new JButton("Add");
 
             add.addActionListener(e -> {
@@ -54,10 +61,15 @@ public class BookPanel extends JPanel {
             JButton edit = new JButton("Edit");
             JButton del = new JButton("Delete");
             actions.add(add); actions.add(edit); actions.add(del);
-            add(actions, BorderLayout.SOUTH);
         }
 
-        add(top, BorderLayout.NORTH);
-        add(new JScrollPane(table), BorderLayout.CENTER);
+        JButton update = new JButton("Update");
+
+        update.addActionListener(e -> {
+            model.setRowCount(0);
+            bookManagement.displayBooks(model);
+        });
+        actions.add(update);
+        add(actions, BorderLayout.SOUTH);
     }
 }
