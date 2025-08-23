@@ -1,6 +1,7 @@
 package de.th_mannheim.informatik.libraryManagement.ui;
 
 import de.th_mannheim.informatik.libraryManagement.management.BookManagement;
+import de.th_mannheim.informatik.libraryManagement.management.UserManagement;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -16,6 +17,7 @@ public class BookPanel extends JPanel {
     private final DefaultTableModel model;
     private final JTextField searchField = new JTextField();
     private static final BookManagement bookManagement = new BookManagement();
+    private static final UserManagement userManagement = new UserManagement();
 
     public BookPanel() {
         super(new BorderLayout(8, 8));
@@ -40,14 +42,22 @@ public class BookPanel extends JPanel {
 
         clear.addActionListener(e -> searchField.setText(""));
 
-        JPanel actions = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        JButton add = new JButton("Add");
-        JButton edit = new JButton("Edit");
-        JButton del = new JButton("Delete");
-        actions.add(add); actions.add(edit); actions.add(del);
+        if (userManagement.getRole().equals("ADMIN")) {
+            JPanel actions = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+            JButton add = new JButton("Add");
+
+            add.addActionListener(e -> {
+                AddBookFrame addBookFrame = new AddBookFrame();
+                addBookFrame.setVisible(true);
+            });
+
+            JButton edit = new JButton("Edit");
+            JButton del = new JButton("Delete");
+            actions.add(add); actions.add(edit); actions.add(del);
+            add(actions, BorderLayout.SOUTH);
+        }
 
         add(top, BorderLayout.NORTH);
         add(new JScrollPane(table), BorderLayout.CENTER);
-        add(actions, BorderLayout.SOUTH);
     }
 }

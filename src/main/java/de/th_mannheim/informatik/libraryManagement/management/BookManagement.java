@@ -2,6 +2,7 @@ package de.th_mannheim.informatik.libraryManagement.management;
 
 import de.th_mannheim.informatik.libraryManagement.domain.media.Book;
 import de.th_mannheim.informatik.libraryManagement.domain.media.BookDAO;
+import de.th_mannheim.informatik.libraryManagement.domain.media.CreateMediaService;
 
 import javax.swing.table.DefaultTableModel;
 import java.util.List;
@@ -35,5 +36,23 @@ public class BookManagement {
             });
         }
         return true;
+    }
+
+    /**
+     * Adds a new book with the specified details.
+     *
+     * @param isbn   The ISBN of the book.
+     * @param title  The title of the book.
+     * @param author The author of the book.
+     * @param year   The publication year of the book.
+     */
+    public void addBooks(long isbn, String title, String author, int year) {
+        CreateMediaService createMediaService = new CreateMediaService();
+        createMediaService.createMedia(isbn, title, author, year, true);
+    }
+
+
+    public boolean checkIfBookExists(long isbn) {
+        return BookDAO.checkIfBookExists(isbn);
     }
 }

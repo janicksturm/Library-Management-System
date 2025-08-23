@@ -1,5 +1,9 @@
 package de.th_mannheim.informatik.libraryManagement.domain.media;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,5 +37,24 @@ public class BookDAO {
             LOGGER.severe("Error retrieving books: " + e.getMessage());
         }
         return books;
+    }
+
+    public static boolean checkIfBookExists(long isbn) {
+        EntityManagerFactory emf = null;
+        try {
+            emf = Persistence.createEntityManagerFactory("library_db");
+            EntityManager em = emf.createEntityManager();
+            Book existMedia = em.createQuery("SELECT b FROM Book b WHERE b.isbn = :isbn", Book.class)
+                    .setParameter("isbn", isbn)
+                    .getSingleResult();
+            return existMedia != null;
+        } catch (Exception e) {
+            LOGGER.severe("Error checking if book exists: " + e.getMessage());
+            return false;
+        } finally {
+            if (emf != null) {
+                emf.close();
+            }
+        }
     }
 }
