@@ -15,6 +15,10 @@ public class LibraryManagementUI extends JFrame {
     private final LoanPanel loansPanel = new LoanPanel();
     private static final UserManagement userManagement = new UserManagement();
 
+    /**
+     * Constructor for LibraryManagementUI.
+     * Initializes the main frame with tabs and menu bar.
+     */
     public LibraryManagementUI() {
         super("Library Management System");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -41,9 +45,12 @@ public class LibraryManagementUI extends JFrame {
         JMenuBar bar = new JMenuBar();
 
         JMenuItem logout = new JMenuItem("Logout");
+        JLabel currentUser = new JLabel("Logged in as: " + userManagement.getCurrentUser());
         logout.addActionListener(e -> logout());
 
-        bar.add(logout);
+        bar.setLayout(new BorderLayout());
+        bar.add(currentUser, BorderLayout.WEST);
+        bar.add(logout, BorderLayout.EAST);
         return bar;
     }
 

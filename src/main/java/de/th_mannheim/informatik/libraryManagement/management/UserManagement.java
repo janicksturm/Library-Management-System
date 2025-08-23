@@ -10,6 +10,7 @@ import java.util.logging.Logger;
  */
 public class UserManagement {
     private static String role;
+    private static String currentUser;
     private static final Logger LOGGER = Logger.getLogger(UserManagement.class.getName());
     /**
      * This method creates a new user.
@@ -27,6 +28,7 @@ public class UserManagement {
     public boolean authenticateUser(String username, String password) {
         String authenticatedRole = AuthUserService.authenticate(username, password);
         if (authenticatedRole != null) {
+            currentUser = username;
             role = authenticatedRole;
             return true;
         }
@@ -41,6 +43,19 @@ public class UserManagement {
         return role;
     }
 
+    /**
+     * This method returns the username of the current user.
+     * @return The username of the current user.
+     */
+    public String getCurrentUser() {
+        return currentUser;
+    }
+
+    /**
+     * This method deletes a user.
+     * @param username The username of the user to be deleted.
+     * @return true if deletion is successful, false otherwise.
+     */
     public boolean deleteUser(String username) {
         return CreateUserService.removeUser(username);
     }

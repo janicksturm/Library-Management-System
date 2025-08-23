@@ -17,6 +17,10 @@ public class LoginFrame extends JFrame {
     private JPasswordField passwordField;
     private static final UserManagement userManagement = new UserManagement();
 
+    /**
+     * Constructor for LoginFrame.
+     * Initializes the frame with components for user login.
+     */
     public LoginFrame() {
         super("Library Login");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -87,23 +91,5 @@ public class LoginFrame extends JFrame {
         LibraryManagementUI ui = new LibraryManagementUI();
         ui.setVisible(true);
         this.dispose();
-    }
-
-    public static void main(String[] args) {
-        try {
-            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (Exception e) {
-            LOGGER.warning("Failed to set Look and Feel: " + e.getMessage());
-        }
-
-        SwingUtilities.invokeLater(() -> {
-            LoginFrame login = new LoginFrame();
-            login.setVisible(true);
-        });
     }
 }
