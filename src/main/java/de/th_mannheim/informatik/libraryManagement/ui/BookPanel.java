@@ -59,7 +59,11 @@ public class BookPanel extends JPanel {
             });
 
             JButton edit = new JButton("Edit");
+
             JButton del = new JButton("Delete");
+
+            del.addActionListener(e -> removeButtonAction());
+
             actions.add(add); actions.add(edit); actions.add(del);
         }
 
@@ -71,5 +75,17 @@ public class BookPanel extends JPanel {
         });
         actions.add(update);
         add(actions, BorderLayout.SOUTH);
+    }
+
+    private void removeButtonAction() {
+        int selectedRow = table.getSelectedRow();
+        if (selectedRow != -1) {
+            long isbn = (long) table.getValueAt(selectedRow, 1);
+            bookManagement.removeBook(isbn);
+            model.removeRow(selectedRow);
+            JOptionPane.showMessageDialog(this, "Book deleted successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Please select a book to delete.", "No Selection", JOptionPane.WARNING_MESSAGE);
+        }
     }
 }

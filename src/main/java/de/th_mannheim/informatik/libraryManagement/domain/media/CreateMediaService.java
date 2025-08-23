@@ -54,6 +54,10 @@ public class CreateMediaService {
         }
     }
 
+    /**
+     * Removes media (book) by its ISBN.
+     * @param isbn
+     */
     public void removeMedia(long isbn) {
         EntityManagerFactory emf = null;
         try {

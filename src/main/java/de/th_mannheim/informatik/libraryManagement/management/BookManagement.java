@@ -12,6 +12,7 @@ import java.util.List;
  * This class provides methods to display books in a table model.
  */
 public class BookManagement {
+    private final CreateMediaService createMediaService = new CreateMediaService();
     /**
      * Displays all books in the provided table model.
      *
@@ -47,8 +48,16 @@ public class BookManagement {
      * @param year   The publication year of the book.
      */
     public void addBooks(long isbn, String title, String author, int year) {
-        CreateMediaService createMediaService = new CreateMediaService();
         createMediaService.createMedia(isbn, title, author, year, true);
+    }
+
+    /**
+     * Removes a book by its ISBN.
+     *
+     * @param isbn The ISBN of the book to remove.
+     */
+    public void removeBook(long isbn) {
+        createMediaService.removeMedia(isbn);
     }
 
 
