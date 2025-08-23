@@ -1,28 +1,35 @@
-import de.th_mannheim.informatik.libraryManagement.domain.data.AuthService;
+import de.th_mannheim.informatik.libraryManagement.domain.data.AuthUserService;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class AuthServiceTest {
 
     @Test
     public void testValidAuthentication() {
-        String username = "admin";
-        String password = "admin123";
+        String username = "testadmin";
+        String password = "testpassword";
         String expectedRole = "ADMIN";
+        String actualRole = AuthUserService.authenticate(username, password);
 
-        String actualRole = AuthService.authenticate(username, password);
-
-        assertTrue(actualRole.equals(expectedRole));
+        assertEquals(expectedRole, actualRole);
     }
 
     @Test
     public void testInvalidAuthentication() {
-        String username = "admin";
-        String password = "wrongpassword";
+        String username = "testAdmin";
+        String password = "wrongPassword";
+        String actualRole = AuthUserService.authenticate(username, password);
 
-        String actualRole = AuthService.authenticate(username, password);
+        assertNull(actualRole);
+    }
 
-        assertTrue(actualRole == null);
+    @Test
+    public void testEmptyCredentials() {
+        String username = "";
+        String password = "";
+        String actualRole = AuthUserService.authenticate(username, password);
+
+        assertNull(actualRole);
     }
 }

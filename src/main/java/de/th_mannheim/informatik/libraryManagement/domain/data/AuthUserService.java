@@ -3,8 +3,8 @@ package de.th_mannheim.informatik.libraryManagement.domain.data;
 import java.sql.*;
 import java.util.logging.Logger;
 
-public class AuthService {
-    private static final Logger LOGGER = Logger.getLogger(AuthService.class.getName());
+public class AuthUserService {
+    private static final Logger LOGGER = Logger.getLogger(AuthUserService.class.getName());
     private static final String URL = "jdbc:mysql://localhost:3306/library_db";
     private static final String USER = "root";
     private static final String PASSWORD = "";

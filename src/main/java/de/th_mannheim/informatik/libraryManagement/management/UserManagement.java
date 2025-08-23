@@ -1,11 +1,7 @@
 package de.th_mannheim.informatik.libraryManagement.management;
 
-import de.th_mannheim.informatik.libraryManagement.domain.data.AuthService;
+import de.th_mannheim.informatik.libraryManagement.domain.data.AuthUserService;
 import de.th_mannheim.informatik.libraryManagement.domain.data.CreateUserService;
-import de.th_mannheim.informatik.libraryManagement.domain.data.User;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
 
 import java.util.logging.Logger;
 
@@ -29,7 +25,7 @@ public class UserManagement {
      * @return true if authentication is successful, false otherwise.
      */
     public boolean authenticateUser(String username, String password) {
-        String authenticatedRole = AuthService.authenticate(username, password);
+        String authenticatedRole = AuthUserService.authenticate(username, password);
         if (authenticatedRole != null) {
             role = authenticatedRole;
             return true;
